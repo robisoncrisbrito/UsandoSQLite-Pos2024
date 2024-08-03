@@ -4,6 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
+import br.edu.utfpr.usandosqlite_pos2024.MainActivity
+import br.edu.utfpr.usandosqlite_pos2024.MainActivity.Companion
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
 
 class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABASE_NAME, null, DATABASE_VERSION ) {
@@ -52,8 +55,29 @@ class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABAS
         db.delete( TABLE_NAME, "_id=${id}", null)
     }
 
-    fun find() {
+    fun find( id : Int ) : Cadastro? {
+        val db = this.writableDatabase
 
+        val registro =  db.query(
+            "cadastro",
+            null,
+            "_id=${id}",
+            null,
+            null,
+            null,
+            null
+        )
+
+        if ( registro.moveToNext() ) {
+            val cadastro = Cadastro(
+                id,
+                registro.getString( NOME ),
+                registro.getString( TELEFONE ),
+            )
+            return cadastro
+        } else {
+            return null
+        }
     }
 
     fun list() {
