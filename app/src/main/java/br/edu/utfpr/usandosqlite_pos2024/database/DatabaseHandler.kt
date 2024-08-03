@@ -4,9 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.widget.Toast
-import br.edu.utfpr.usandosqlite_pos2024.MainActivity
-import br.edu.utfpr.usandosqlite_pos2024.MainActivity.Companion
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
 
 class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABASE_NAME, null, DATABASE_VERSION ) {

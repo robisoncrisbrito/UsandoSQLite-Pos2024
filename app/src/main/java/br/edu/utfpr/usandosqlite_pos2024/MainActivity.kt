@@ -1,12 +1,12 @@
 package br.edu.utfpr.usandosqlite_pos2024
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite_pos2024.databinding.ActivityMainBinding
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btPListarOnClick() {
-        val registro =  banco.list()
+        /*val registro =  banco.list()
 
         var saida = StringBuilder()
 
@@ -85,7 +85,10 @@ class MainActivity : AppCompatActivity() {
             saida.append( "\n" )
         }
 
-        Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()
+        Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()*/
+        val intent = Intent( this, ListarActivity::class.java )
+        startActivity( intent )
+
     }
 
 }
