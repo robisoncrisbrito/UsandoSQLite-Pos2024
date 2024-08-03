@@ -1,18 +1,17 @@
 package br.edu.utfpr.usandosqlite_pos2024
 
-import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite_pos2024.databinding.ActivityMainBinding
-
+import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var banco : SQLiteDatabase
+    private lateinit var banco : DatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         setButtonListener()
 
-        banco = SQLiteDatabase.openOrCreateDatabase(
-            this.getDatabasePath( "dbfile.sqlite" ),
-            null
-        )
-
-        banco.execSQL( "CREATE TABLE IF NOT EXISTS cadastro (_id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT ) ")
+        banco = DatabaseHandler(this )
     }
 
     private fun setButtonListener() {
@@ -52,84 +46,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btIncluirOnClick() {
-
-        val registro = ContentValues()
-        registro.put( "nome", binding.etNome.text.toString() )
-        registro.put( "telefone", binding.etTelefone.text.toString() )
-
-        banco.insert( "cadastro", null, registro )
-
+        banco.insert( Cadastro( 0, binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
         Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
-
     }
 
     private fun btAlterarOnClick() {
-        val registro = ContentValues()
-        registro.put( "nome", binding.etNome.text.toString() )
-        registro.put( "telefone", binding.etTelefone.text.toString() )
-
-        banco.update( "cadastro", registro, "_id=${binding.etCod.text.toString()}", null )
-
+        banco.update( Cadastro( binding.etCod.text.toString().toInt(), binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
         Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
     }
 
     private fun btExcluirOnClick() {
-        banco.delete( "cadastro", "_id=${binding.etCod.text.toString()}", null)
+        banco.delete( binding.etCod.text.toString().toInt() )
         Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
     }
 
     private fun btPesquisarOnClick() {
-        val registro =  banco.query(
-            "cadastro",
-            null,
-            "_id=${binding.etCod.text.toString()}",
-            null,
-            null,
-            null,
-            null
-        )
+        val registro =  banco.find( binding.etCod.text.toString().toInt()  )
 
-        if ( registro.moveToNext() ) {
-            binding.etNome.setText( registro.getString(Companion.NOME) )
-            binding.etTelefone.setText( registro.getString(Companion.TELEFONE) )
+        if ( registro != null ) {
+            binding.etNome.setText( registro.nome )
+            binding.etTelefone.setText( registro.telefone )
         } else {
             Toast.makeText( this, "Registro não encontrado", Toast.LENGTH_LONG ).show()
         }
-
-
-
     }
 
     private fun btPListarOnClick() {
-        val registro =  banco.query(
-            "cadastro",
-            null,
-            null,
-            null,
-            null,
-            null,
-            null
-        )
+        val registro =  banco.list()
 
         var saida = StringBuilder()
 
-        while ( registro.moveToNext() ) {
-            saida.append( registro.getInt(Companion.COD) )
+        registro.forEach{
+            saida.append( it._id )
             saida.append( "-" )
-            saida.append( registro.getString(Companion.NOME) )
+            saida.append( it.nome )
             saida.append( "-" )
-            saida.append( registro.getString(Companion.TELEFONE) )
+            saida.append( it.telefone )
             saida.append( "\n" )
         }
 
         Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()
     }
-
-    companion object {
-        private const val COD = 0
-        private const val NOME = 1
-        private const val TELEFONE = 2
-    }
-
 
 }
