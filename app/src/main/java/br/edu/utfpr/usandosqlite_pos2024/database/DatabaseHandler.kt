@@ -2,6 +2,7 @@ package br.edu.utfpr.usandosqlite_pos2024.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
@@ -93,6 +94,22 @@ class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABAS
         }
 
         return registros
+    }
+
+    fun cursorList() : Cursor {
+        val db = this.writableDatabase
+
+        val registro = db.query(
+            "cadastro",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        return registro
     }
 
     companion object {
