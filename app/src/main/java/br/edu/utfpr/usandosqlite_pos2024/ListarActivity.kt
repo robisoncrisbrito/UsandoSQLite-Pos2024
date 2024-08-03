@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
+import br.edu.utfpr.usandosqlite_pos2024.adapter.MeuAdapter
 import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite_pos2024.databinding.ActivityListarBinding
 
@@ -23,15 +24,7 @@ class ListarActivity : AppCompatActivity() {
 
         val registros : Cursor = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
 
-        val adapter = SimpleCursorAdapter(
-            this,
-            android.R.layout.simple_list_item_2,
-            registros,
-            arrayOf( "nome", "telefone" ),
-            intArrayOf( android.R.id.text1, android.R.id.text2 ),
-            0
-        )//meio de campo
-
+        val adapter = MeuAdapter( this, registros )
         binding.lvPrincipal.adapter = adapter //destino
     }
 }
