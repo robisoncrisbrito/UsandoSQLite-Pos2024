@@ -20,15 +20,6 @@ class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABAS
         onCreate( db )
     }
 
-    companion object {
-        private const val DATABASE_NAME = "dbfile.sqlite"
-        private const val DATABASE_VERSION = 1
-        private const val TABLE_NAME = "cadastro"
-        private const val COD = 0
-        private const val NOME = 1
-        private const val TELEFONE = 2
-    }
-
     fun insert( cadastro : Cadastro) {
         val db = this.writableDatabase
 
@@ -80,8 +71,40 @@ class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABAS
         }
     }
 
-    fun list() {
+    fun list() : MutableList<Cadastro> {
+        val db = this.writableDatabase
+        val registro =  db.query(
+            "cadastro",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        )
 
+        var registros = mutableListOf<Cadastro>()
+
+        while ( registro.moveToNext() ) {
+            val cadastro = Cadastro(
+                registro.getInt( COD ),
+                registro.getString( NOME ),
+                registro.getString( TELEFONE ),
+            )
+
+            registros.add( cadastro )
+        }
+
+        return registros
+    }
+
+    companion object {
+        private const val DATABASE_NAME = "dbfile.sqlite"
+        private const val DATABASE_VERSION = 1
+        private const val TABLE_NAME = "cadastro"
+        private const val COD = 0
+        private const val NOME = 1
+        private const val TELEFONE = 2
     }
 
 }
