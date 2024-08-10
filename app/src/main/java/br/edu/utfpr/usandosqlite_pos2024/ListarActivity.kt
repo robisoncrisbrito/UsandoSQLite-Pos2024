@@ -3,8 +3,6 @@ package br.edu.utfpr.usandosqlite_pos2024
 import android.R
 import android.database.Cursor
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.usandosqlite_pos2024.adapter.MeuAdapter
 import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
@@ -22,7 +20,7 @@ class ListarActivity : AppCompatActivity() {
 
         banco = DatabaseHandler( this )
 
-        val registros : Cursor = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
+        val registros = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
 
         val adapter = MeuAdapter( this, registros )
         binding.lvPrincipal.adapter = adapter //destino

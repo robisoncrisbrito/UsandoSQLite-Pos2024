@@ -8,7 +8,7 @@ import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite_pos2024.databinding.ActivityMainBinding
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() { //fim da MainActivity
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var banco : DatabaseHandler
@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         setButtonListener()
 
         banco = DatabaseHandler(this )
+
+        System.out.println( "onCreate() executado" )
     }
 
     private fun setButtonListener() {
@@ -72,23 +74,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun btPListarOnClick() {
-        /*val registro =  banco.list()
-
-        var saida = StringBuilder()
-
-        registro.forEach{
-            saida.append( it._id )
-            saida.append( "-" )
-            saida.append( it.nome )
-            saida.append( "-" )
-            saida.append( it.telefone )
-            saida.append( "\n" )
-        }
-
-        Toast.makeText( this, saida.toString(), Toast.LENGTH_LONG ).show()*/
         val intent = Intent( this, ListarActivity::class.java )
         startActivity( intent )
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        System.out.println( "onStart() executado" )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        System.out.println( "onResume() executado" )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        System.out.println( "onPause() executado" )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        System.out.println( "onStop() executado" )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        System.out.println( "onDestroy() executado" )
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        System.out.println( "onDestroy() executado" )
     }
 
 }
