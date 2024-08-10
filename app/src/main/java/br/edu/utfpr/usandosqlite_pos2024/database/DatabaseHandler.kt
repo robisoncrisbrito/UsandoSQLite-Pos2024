@@ -116,9 +116,9 @@ class DatabaseHandler (context : Context ) : SQLiteOpenHelper ( context, DATABAS
         private const val DATABASE_NAME = "dbfile.sqlite"
         private const val DATABASE_VERSION = 1
         private const val TABLE_NAME = "cadastro"
-        private const val COD = 0
-        private const val NOME = 1
-        private const val TELEFONE = 2
+        public const val COD = 0
+        public const val NOME = 1
+        public const val TELEFONE = 2
     }
 
 }

@@ -25,14 +25,19 @@ class ListarActivity : AppCompatActivity() {
             btIncluirOnClick()
         }
 
-        val registros = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
-
-        val adapter = MeuAdapter( this, registros )
-        binding.lvPrincipal.adapter = adapter //destino
     }
 
     private fun btIncluirOnClick() {
         val intent = Intent( this, MainActivity::class.java )
         startActivity( intent )
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val registros = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
+
+        val adapter = MeuAdapter( this, registros )
+        binding.lvPrincipal.adapter = adapter //destino
     }
 }
