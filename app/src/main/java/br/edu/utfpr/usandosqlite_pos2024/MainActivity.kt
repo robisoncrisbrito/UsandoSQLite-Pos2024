@@ -59,11 +59,14 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
             banco.update( Cadastro( binding.etCod.text.toString().toInt(), binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
             Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
         }
+
+        finish()
     }
 
     private fun btExcluirOnClick() {
         banco.delete( binding.etCod.text.toString().toInt() )
         Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
+        finish()
     }
 
     private fun btPesquisarOnClick() {
