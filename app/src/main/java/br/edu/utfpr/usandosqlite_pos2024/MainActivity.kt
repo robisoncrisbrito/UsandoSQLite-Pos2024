@@ -47,9 +47,6 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
 
     }
 
-    private fun btIncluirOnClick() {
-
-    }
 
     private fun btSalvarOnClick() {
         if ( binding.etCod.text.isEmpty() ) {
