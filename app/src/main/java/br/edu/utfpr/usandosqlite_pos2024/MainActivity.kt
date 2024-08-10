@@ -20,18 +20,21 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
 
         setButtonListener()
 
+        if ( intent.getIntExtra( "cod", 0 ) != 0 ) {
+            binding.etCod.setText( intent.getIntExtra( "cod", 0 ).toString() )
+            binding.etNome.setText( intent.getStringExtra( "nome" ) )
+            binding.etTelefone.setText( intent.getStringExtra( "telefone" ) )
+        }
+
         banco = DatabaseHandler(this )
 
         System.out.println( "onCreate() executado" )
     }
 
     private fun setButtonListener() {
-        binding.btIncluir.setOnClickListener{
-            btIncluirOnClick()
-        }
 
-        binding.btAlterar.setOnClickListener{
-            btAlterarOnClick()
+        binding.btSalvar.setOnClickListener{
+            btSalvarOnClick()
         }
 
         binding.btExcluir.setOnClickListener{
@@ -42,19 +45,20 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
             btPesquisarOnClick()
         }
 
-        binding.btListar.setOnClickListener{
-            btPListarOnClick()
-        }
     }
 
     private fun btIncluirOnClick() {
-        banco.insert( Cadastro( 0, binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
-        Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
+
     }
 
-    private fun btAlterarOnClick() {
-        banco.update( Cadastro( binding.etCod.text.toString().toInt(), binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
-        Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
+    private fun btSalvarOnClick() {
+        if ( binding.etCod.text.isEmpty() ) {
+            banco.insert( Cadastro( 0, binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
+            Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
+        } else {
+            banco.update( Cadastro( binding.etCod.text.toString().toInt(), binding.etNome.text.toString(), binding.etTelefone.text.toString() ) )
+            Toast.makeText( this, "Sucesso!!!", Toast.LENGTH_LONG ).show()
+        }
     }
 
     private fun btExcluirOnClick() {
