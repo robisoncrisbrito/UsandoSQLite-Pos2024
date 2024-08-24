@@ -8,6 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import br.edu.utfpr.usandosqlite_pos2024.adapter.MeuAdapter
 import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler
 import br.edu.utfpr.usandosqlite_pos2024.databinding.ActivityListarBinding
+import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class ListarActivity : AppCompatActivity() {
 
@@ -35,9 +38,33 @@ class ListarActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val registros = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
+        val banco = Firebase.firestore
 
-        val adapter = MeuAdapter( this, registros )
-        binding.lvPrincipal.adapter = adapter //destino
+        banco.collection( "cadastro" )
+            .get()
+            .addOnSuccessListener { result ->
+                var registros = mutableListOf<Cadastro>()
+                for ( document in result ) {
+                    val cadastro = Cadastro(
+                        document.data.get( "_id" ).toString().toInt(),
+                        document.data.get( "nome" ).toString(),
+                        document.data.get( "telefone" ).toString()
+                    )
+                    registros.add( cadastro )
+                }
+
+                val adapter = MeuAdapter( this, registros )
+                binding.lvPrincipal.adapter = adapter //destino
+
+            }
+            .addOnFailureListener{ e->
+                println( "Erro${e.message}" )
+            }
+
+
+
+        //val registros = banco.cursorList() //fonte  tem que ter selecionado o campo _id, com exatamente este nome
+
+
     }
 }

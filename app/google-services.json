@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "343264790923",
+    "project_id": "usandosqlite-teste",
+    "storage_bucket": "usandosqlite-teste.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343264790923:android:ab14c7856b3ecf1e91078e",
+        "android_client_info": {
+          "package_name": "br.edu.utfpr.usandosqlite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3_9ghkK-e3cd-7Yuko7P3kC_AdkY3Ws8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:343264790923:android:78244cda0b5c907291078e",
+        "android_client_info": {
+          "package_name": "br.edu.utfpr.usandosqlite_pos2024"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3_9ghkK-e3cd-7Yuko7P3kC_AdkY3Ws8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

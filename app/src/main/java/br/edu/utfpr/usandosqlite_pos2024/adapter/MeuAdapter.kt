@@ -16,25 +16,21 @@ import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler.Companion.NOME
 import br.edu.utfpr.usandosqlite_pos2024.database.DatabaseHandler.Companion.TELEFONE
 import br.edu.utfpr.usandosqlite_pos2024.entity.Cadastro
 
-class MeuAdapter(val context : Context, val cursor : Cursor) : BaseAdapter() {
+class MeuAdapter(val context : Context, val registros : MutableList<Cadastro>) : BaseAdapter() {
 
     override fun getCount(): Int {
-        return cursor.count
+        return registros.size
     }
 
     override fun getItem(position: Int): Any {
-        cursor.moveToPosition( position )
-        val cadastro = Cadastro(
-            cursor.getInt(  COD ),
-            cursor.getString( NOME ),
-            cursor.getString( TELEFONE )
-        )
+
+        val cadastro = registros.get( position )
         return cadastro
     }
 
     override fun getItemId(position: Int): Long {
-        cursor.moveToPosition( position )
-        return cursor.getLong( COD )
+        val cadastro = registros.get( position )
+        return cadastro._id.toLong()
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -45,19 +41,19 @@ class MeuAdapter(val context : Context, val cursor : Cursor) : BaseAdapter() {
         val tvTelefoneElementoLista = v.findViewById<TextView>( R.id.tvTelefoneElementoLista )
         val btEditarElementoLista = v.findViewById<ImageButton>( R.id.btEditarElementoLista )
 
-        cursor.moveToPosition( position )
+        val cadastro = registros.get( position )
 
-        tvNomeElementoLista.setText( cursor.getString( NOME ) )
-        tvTelefoneElementoLista.setText( cursor.getString( TELEFONE ) )
+        tvNomeElementoLista.setText( cadastro.nome )
+        tvTelefoneElementoLista.setText( cadastro.telefone )
 
         btEditarElementoLista.setOnClickListener{
-            cursor.moveToPosition( position )
+            val cadastro = registros.get( position )
 
             val intent = Intent( context, MainActivity::class.java)
 
-            intent.putExtra( "cod", cursor.getInt( COD ) )
-            intent.putExtra( "nome", cursor.getString( NOME ) )
-            intent.putExtra( "telefone", cursor.getString( TELEFONE ) )
+            intent.putExtra( "cod", cadastro._id )
+            intent.putExtra( "nome", cadastro.nome )
+            intent.putExtra( "telefone", cadastro.telefone )
 
             context.startActivity( intent )
         }
