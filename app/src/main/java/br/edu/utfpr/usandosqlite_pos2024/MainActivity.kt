@@ -87,10 +87,6 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
         builder.setNegativeButton( "Fechar", null )
         builder.setPositiveButton( "Pesquisar", DialogInterface.OnClickListener { dialogInterface, i ->
 
-
-
-
-
             val banco = Firebase.firestore
             banco.collection( "cadastro" )
                 .whereEqualTo( "_id", etCodPesquisar.text.toString().toInt() )
