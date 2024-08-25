@@ -78,40 +78,35 @@ class MainActivity : AppCompatActivity() { //fim da MainActivity
     }
 
     private fun btPesquisarOnClick() {
-
         val builder = AlertDialog.Builder( this )
 
         val etCodPesquisar = EditText( this )
-
         builder.setTitle( "Digite o código da pesquisa" )
         builder.setView( etCodPesquisar )
         builder.setCancelable( false )
         builder.setNegativeButton( "Fechar", null )
         builder.setPositiveButton( "Pesquisar", DialogInterface.OnClickListener { dialogInterface, i ->
 
-            val banco = Firebase.firestore
 
+
+
+
+            val banco = Firebase.firestore
             banco.collection( "cadastro" )
                 .whereEqualTo( "_id", etCodPesquisar.text.toString().toInt() )
                 .get()
                 .addOnSuccessListener { result ->
                     val registro = result.documents.get(0)
-
                     binding.etCod.setText( etCodPesquisar.text.toString() )
                     binding.etNome.setText( registro.data?.get( "nome" ).toString() )
                     binding.etTelefone.setText( registro.data?.get( "telefone" ).toString() )
-
                 }
                 .addOnFailureListener { e ->
                     println( "Erro${e.message}")
                 }
-
         }
         )
-
         builder.show();
-
-        /**/
     }
 
     private fun btPListarOnClick() {
